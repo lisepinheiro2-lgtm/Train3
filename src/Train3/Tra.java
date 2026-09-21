@@ -1,4 +1,5 @@
 package Train3;
+
 //Test portable
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -4642,5 +4643,198 @@ public class Tra {
 		}
 
 		return title;
+	}
+
+	public static int rowClosestToGlobalAverage(int[][] numbers) {
+
+		int index = -1;
+		double averageAll = 0;
+		int totalAll = 0;
+		int countAll = 0;
+
+		for (int i = 0; i < numbers.length; i++) {
+
+			for (int j = 0; j < numbers[i].length; j++) {
+
+				totalAll += numbers[i][j];
+				countAll++;
+			}
+
+		}
+
+		if (countAll == 0) {
+			return -1;
+		}
+
+		averageAll = (double) totalAll / countAll;
+		double betterAverageDistance = 0;
+
+		for (int i = 0; i < numbers.length; i++) {
+
+			if (numbers[i].length == 0) {
+				continue;
+			}
+
+			int totalRow = 0;
+
+			for (int j = 0; j < numbers[i].length; j++) {
+
+				totalRow += numbers[i][j];
+			}
+
+			double averageRow = (double) totalRow / numbers[i].length;
+			double currentAverageDistance = Math.abs(averageRow - averageAll);
+
+			if (index == -1 || currentAverageDistance < betterAverageDistance) {
+				betterAverageDistance = currentAverageDistance;
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
+	public static int indexClosestToAverageValue(ArrayList<String> values) {
+
+		int totalAll = 0;
+		int countAll = 0;
+		double averageAll = 0;
+		double bestDistance = 0;
+		int index = -1;
+
+		if (values.size() == 0) {
+			return -1;
+		}
+
+		for (int i = 0; i < values.size(); i++) {
+
+			if (values.get(i) == null || values.get(i).isBlank()) {
+				continue;
+			}
+
+			try {
+				int number = Integer.parseInt(values.get(i));
+				totalAll += number;
+				countAll++;
+
+			} catch (NumberFormatException e) {
+				continue;
+			}
+		}
+
+		if (countAll == 0) {
+			return -1;
+		}
+
+		averageAll = (double) totalAll / countAll;
+
+		for (int i = 0; i < values.size(); i++) {
+
+			if (values.get(i) == null || values.get(i).isBlank()) {
+				continue;
+			}
+
+			try {
+				int number = Integer.parseInt(values.get(i));
+
+				double distance = Math.abs(number - averageAll);
+
+				if (index == -1 || bestDistance > distance) {
+					bestDistance = distance;
+					index = i;
+				}
+
+			} catch (NumberFormatException e) {
+				continue;
+			}
+		}
+		return index;
+	}
+
+	public static int countDominantMovies(ArrayList<Movie> movies) {
+
+		int count = 0;
+
+		for (int i = 0; i < movies.size(); i++) {
+
+			if (movies.get(i).getTitle() == null || movies.get(i).getTitle().isBlank()) {
+				continue;
+			}
+
+			Movie movieI = movies.get(i);
+			String titleI = movies.get(i).getTitle();
+			char charI = Character.toLowerCase(titleI.charAt(0));
+
+			for (int j = 0; j < movies.size(); j++) {
+
+				if (movies.get(j).getTitle() == null || movies.get(j).getTitle().isBlank()) {
+					continue;
+				}
+
+				if (j == i) {
+					continue;
+				}
+
+				Movie movieJ = movies.get(j);
+				String titleJ = movies.get(j).getTitle();
+				char charJ = Character.toLowerCase(titleJ.charAt(0));
+
+				if (charJ == charI && movieJ.getRating() < movieI.getRating()
+						&& movieJ.getDuration() > movieI.getDuration()) {
+					count++;
+					break;
+				}
+			}
+
+		}
+
+		return count;
+	}
+
+	public static int rowWithMostDistinctPositives(int[][] numbers) {
+
+		int bestCount = 0;
+		int maxTotal = 0;
+		int index = -1;
+
+		for (int i = 0; i < numbers.length; i++) {
+
+			int count = 0;
+			int currentTotal = 0;
+
+			for (int j = 0; j < numbers[i].length; j++) {
+
+				int numberJ = numbers[i][j];
+				boolean saw = false;
+
+				currentTotal += numberJ;
+
+				if (numberJ <= 0) {
+					continue;
+				}
+
+				for (int k = 0; k < j; k++) {
+
+					int numberK = numbers[i][k];
+
+					if (numberJ == numberK) {
+						saw = true;
+						break;
+					}
+				}
+
+				if (!saw) {
+					count++;
+				}
+			}
+
+			if (index == -1 || count > bestCount || count == bestCount && currentTotal > maxTotal) {
+				bestCount = count;
+				maxTotal = currentTotal;
+				index = i;
+			}
+		}
+
+		return index;
 	}
 }

@@ -7,17 +7,16 @@ import java.util.Arrays;
 public class Main {
 
 	public static void main(String[] args) {
+		int[][] numbers = {
+			    {4, 4, 2, -1, 2, 7},
+			    {5, 1, 5, 9, -20},
+			    {3, 3, 3, 8, 8, 10},
+			    {},
+			    {-1, -2, -3},
+			    {6, 6, 2, 1, 1}
+			};
 
-		ArrayList<Movie> movies = new ArrayList<>();
-
-		movies.add(new Movie("Avatar", 162, 8.1));
-		movies.add(new Movie("Alien", 117, 8.5));
-		movies.add(new Movie("Arrival", 116, 7.9));
-
-		movies.add(new Movie("Titanic", 195, 8.8));
-		movies.add(new Movie("Terminator", 107, 8.4));
-
-		movies.add(new Movie("Matrix", 136, 9.5));
-		System.out.println(Tra. bestMovieFromBestInitialGroup(movies));
+			System.out.println(Tra.rowWithMostDistinctPositives(numbers));
+		
 	}
 } 
