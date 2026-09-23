@@ -7,16 +7,20 @@ import java.util.Arrays;
 public class Main {
 
 	public static void main(String[] args) {
-		int[][] numbers = {
-			    {4, 4, 2, -1, 2, 7},
-			    {5, 1, 5, 9, -20},
-			    {3, 3, 3, 8, 8, 10},
-			    {},
-			    {-1, -2, -3},
-			    {6, 6, 2, 1, 1}
-			};
 
-			System.out.println(Tra.rowWithMostDistinctPositives(numbers));
-		
+		ArrayList<String> values = new ArrayList<>();
+
+		values.add("4"); // 0
+		values.add("hello"); // ignoré
+		values.add("7"); // 2
+		values.add("4"); // 3
+		values.add("-2"); // 4
+		values.add("7"); // 5
+		values.add("7"); // 6
+		values.add("4"); // 7
+		values.add(" "); // ignoré
+		values.add("7"); // 9
+
+		System.out.println(Tra.indexOfMostFrequentValidNumber(values));
 	}
-} 
+}

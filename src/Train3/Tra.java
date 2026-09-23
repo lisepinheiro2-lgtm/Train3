@@ -4837,4 +4837,154 @@ public class Tra {
 
 		return index;
 	}
+
+	public static int columnWithMostDistinctPositives(int[][] numbers) {
+
+		int maxColumns = 0;
+
+		for (int i = 0; i < numbers.length; i++) {
+
+			if (numbers[i].length > maxColumns) {
+				maxColumns = numbers[i].length;
+			}
+		}
+
+		int maxColumn = 0;
+		int index = -1;
+		int maxCount = 0;
+
+		for (int j = 0; j < maxColumns; j++) {
+
+			int countPositiv = 0;
+			int totalColumn = 0;
+
+			for (int i = 0; i < numbers.length; i++) {
+
+				if (j < numbers[i].length) {
+
+					int currentNumber = numbers[i][j];
+
+					totalColumn += numbers[i][j];
+
+					if (currentNumber <= 0) {
+						continue;
+					}
+
+					boolean saw = false;
+
+					for (int k = 0; k < i; k++) {
+
+						if (j < numbers[k].length) {
+
+							int nextNumber = numbers[k][j];
+
+							if (nextNumber == currentNumber) {
+								saw = true;
+								break;
+							}
+						}
+					}
+
+					if (!saw) {
+						countPositiv++;
+					}
+				}
+			}
+
+			if (index == -1 || countPositiv > maxCount || countPositiv == maxCount && totalColumn > maxColumn) {
+				maxColumn = totalColumn;
+				maxCount = countPositiv;
+				index = j;
+			}
+		}
+
+		return index;
+	}
+
+	public static int rowWithMostLocalPeaks(int[][] numbers) {
+
+		int maxPeaksCount = 0;
+		int index = -1;
+		int maxTotalRow = 0;
+
+		for (int i = 0; i < numbers.length; i++) {
+
+			int peaksCount = 0;
+			int totalRow = 0;
+
+			for (int j = 1; j < numbers[i].length - 1; j++) {
+
+				int previousNumber = numbers[i][j - 1];
+				int currentNumber = numbers[i][j];
+				int nextNumber = numbers[i][j + 1];
+
+				if (previousNumber < currentNumber && currentNumber > nextNumber) {
+					peaksCount++;
+				}
+			}
+
+			for (int k = 0; k < numbers[i].length; k++) {
+
+				totalRow += numbers[i][k];
+			}
+
+			if (index == -1 || peaksCount > maxPeaksCount || peaksCount == maxPeaksCount && totalRow > maxTotalRow) {
+				maxPeaksCount = peaksCount;
+				maxTotalRow = totalRow;
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
+	public static int indexOfMostFrequentValidNumber(ArrayList<String> values) {
+
+		int index = -1;
+		int maxCount = 1;
+
+		for (int i = 0; i < values.size(); i++) {
+
+			if (values.get(i) == null || values.get(i).isBlank()) {
+				continue;
+			}
+
+			int number;
+
+			try {
+				number = Integer.parseInt(values.get(i));
+			} catch (NumberFormatException e) {
+				continue;
+			}
+
+			int count = 1;
+
+			for (int j = values.size() - 1; j > i; j--) {
+
+				if (values.get(j) == null || values.get(j).isBlank()) {
+					continue;
+				}
+
+				try {
+
+					int numberJ = Integer.parseInt(values.get(j));
+
+					if (number == numberJ) {
+						count++;
+					}
+
+				} catch (NumberFormatException e) {
+					continue;
+				}
+
+			}
+
+			if (index == -1 || maxCount < count) {
+				maxCount = count;
+				index = i;
+			}
+		}
+
+		return index;
+	}
 }
