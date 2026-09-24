@@ -8,19 +8,14 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		ArrayList<String> values = new ArrayList<>();
+		int[][] numbers = {
+			    {4, 4, 2, 2, 7},      // 4 et 2 répétés → 2
+			    {5, 5, 5, 1, 9, 9},   // 5 et 9 répétés → 2
+			    {3, 3, 8, 8, 10, 10}, // 3, 8, 10 → 3
+			    {1, 2, 3},             // 0
+			    {}
+			};
 
-		values.add("4"); // 0
-		values.add("hello"); // ignoré
-		values.add("7"); // 2
-		values.add("4"); // 3
-		values.add("-2"); // 4
-		values.add("7"); // 5
-		values.add("7"); // 6
-		values.add("4"); // 7
-		values.add(" "); // ignoré
-		values.add("7"); // 9
-
-		System.out.println(Tra.indexOfMostFrequentValidNumber(values));
+			System.out.println(Tra.rowWithMostRepeatedValues(numbers));
 	}
 }

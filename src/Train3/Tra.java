@@ -4952,7 +4952,9 @@ public class Tra {
 			int number;
 
 			try {
+
 				number = Integer.parseInt(values.get(i));
+
 			} catch (NumberFormatException e) {
 				continue;
 			}
@@ -4983,6 +4985,147 @@ public class Tra {
 				maxCount = count;
 				index = i;
 			}
+		}
+
+		return index;
+	}
+
+	public static int indexOfMostIsolatedNumber(int[] numbers) {
+
+		if (numbers.length == 0) {
+			return -1;
+		}
+
+		if (numbers.length == 1) {
+			return 0;
+		}
+
+		int index = -1;
+		int maxBetterDistance = 0;
+
+		for (int i = 0; i < numbers.length; i++) {
+
+			int testedNumber = numbers[i];
+			int betterDistance = -1;
+
+			for (int j = 0; j < numbers.length; j++) {
+
+				if (j == i) {
+					continue;
+				}
+
+				int number = numbers[j];
+
+				int currentDistance = Math.abs(testedNumber - number);
+
+				if (betterDistance == -1 || currentDistance < betterDistance) {
+					betterDistance = currentDistance;
+				}
+			}
+
+			if (index == -1 || betterDistance > maxBetterDistance) {
+				maxBetterDistance = betterDistance;
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
+	public static int indexOfBestMovieWithUniqueDuration(ArrayList<Movie> movies) {
+
+		int index = -1;
+
+		for (int i = 0; i < movies.size(); i++) {
+
+			if (movies.get(i).getTitle() == null || movies.get(i).getTitle().isBlank()) {
+				continue;
+			}
+
+			boolean isValid = true;
+
+			for (int j = 0; j < movies.size(); j++) {
+
+				if (movies.get(j).getTitle() == null || movies.get(j).getTitle().isBlank() || j == i) {
+					continue;
+				}
+
+				if (movies.get(i).getDuration() == movies.get(j).getDuration()) {
+					isValid = false;
+					break;
+				}
+
+			}
+			if (!isValid) {
+				continue;
+			}
+
+			if (index == -1 || movies.get(i).getRating() > movies.get(index).getRating()) {
+				index = i;
+			}
+		}
+
+		return index;
+	}
+
+	public static int rowWithMostRepeatedValues(int[][] numbers) {
+
+		if (numbers.length == 0) {
+			return -1;
+		}
+
+		if (numbers.length == 1) {
+			return 0;
+		}
+
+		int maxCountRepeatedValues = 0;
+		int maxTotalRow = -1;
+		int index = -1;
+
+		for (int i = 0; i < numbers.length; i++) {
+
+			if (numbers[i].length == 0) {
+				continue;
+			}
+
+			int totalRow = 0;
+			int count = 0;
+
+			for (int j = 0; j < numbers[i].length; j++) {
+
+				boolean saw = false;
+				int number = numbers[i][j];
+				int countRepeatedValues = 0;
+
+				totalRow += number;
+
+				for (int k = 0; k < numbers[i].length; k++) {
+
+					if (k == j) {
+						continue;
+					}
+
+					if (number == numbers[i][k]) {
+						countRepeatedValues++;
+
+						if (k < j) {
+							saw = true;
+						}
+					}
+				}
+
+				if (!saw && countRepeatedValues > 0) {
+					count++;
+				}
+
+				if (index == -1 || maxCountRepeatedValues < count
+						|| maxCountRepeatedValues == count && totalRow > maxTotalRow) {
+					maxTotalRow = totalRow;
+					maxCountRepeatedValues = count;
+					index = i;
+				}
+			}
+
 		}
 
 		return index;
